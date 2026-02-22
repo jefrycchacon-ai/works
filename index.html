@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Jefry Chacon </title>
+    <title>Jefry Chacon | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* --- ESTILOS BASE --- */
@@ -30,43 +30,33 @@
         }
 
         nav {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Centrado perfecto del logo */
             align-items: center;
         }
 
-        .menu-left a, .logo h1, .social-right a {
-            cursor: pointer;
+        .menu-left { display: flex; gap: 20px; }
+        .logo h1 { font-size: 20px; letter-spacing: 6px; font-weight: 300; text-transform: uppercase; cursor: pointer; }
+        .social-right { display: flex; justify-content: flex-end; }
+
+        .menu-left a, .social-right a {
             text-decoration: none;
             color: #fff;
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            cursor: pointer;
             transition: opacity 0.3s;
         }
 
-        .menu-left a {
-            font-size: 11px;
-            letter-spacing: 2px;
-            margin-right: 20px;
-            font-weight: bold;
-        }
-
-        .logo h1 {
-            font-size: 20px;
-            letter-spacing: 6px;
-            font-weight: 300;
-            text-transform: uppercase;
-        }
-
-        .social-right a {
-            font-size: 16px;
-            margin-left: 15px;
-        }
-
+        .social-right a i { font-size: 18px; }
         .menu-left a:hover, .social-right a:hover { opacity: 0.6; }
 
-        /* --- SECCIÓN 1: GALERÍA PRINCIPAL (WORK) --- */
+        /* --- GALERÍA PRINCIPAL (WORK) --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            width: 100%;
         }
 
         .item {
@@ -83,59 +73,38 @@
             transition: transform 0.7s ease;
         }
 
-        .item:hover img { transform: scale(1.05); }
-
         .overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
         }
 
         .item:hover .overlay { opacity: 1; }
+        .item:hover img { transform: scale(1.05); }
 
-        .overlay h2 { font-size: 1rem; letter-spacing: 3px; margin-bottom: 8px; }
-        .overlay p { font-size: 0.7rem; color: #bbb; }
+        .overlay h2 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; }
 
-        /* --- SECCIÓN 2: DETALLE DEL PROYECTO (INTERIOR) --- */
-        #project-detail {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .project-intro {
-            text-align: center;
-            padding: 80px 20px;
-            background-color: #0c0c0c;
-        }
-
+        /* --- DETALLE DEL PROYECTO --- */
+        #project-detail { display: none; }
+        .project-intro { text-align: center; padding: 60px 20px; }
         .project-intro h2 { letter-spacing: 4px; font-size: 1.4rem; margin-bottom: 10px; }
         .project-intro p { font-size: 0.7rem; color: #777; letter-spacing: 1px; }
 
-        .detail-images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 10px;
-        }
-
+        .detail-images { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px; }
         .img-full { width: 100%; }
         .img-half { width: calc(50% - 5px); }
-
         .detail-images img { width: 100%; display: block; }
 
-        /* --- SECCIÓN 3: ABOUT & CONTACT --- */
+        .may-also-like { padding: 40px 0; border-top: 1px solid #222; }
+        .may-also-like h3 { text-align: center; font-size: 14px; letter-spacing: 3px; margin-bottom: 30px; }
+
+        /* --- SECCIÓN ABOUT & CONTACT CORREGIDA --- */
         #about-section {
             display: none;
-            padding: 80px 10%;
+            padding: 100px 10%;
             animation: fadeIn 0.5s ease;
         }
 
@@ -143,45 +112,75 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
+            align-items: start;
         }
 
-        .about-text p { line-height: 1.8; color: #ccc; margin-bottom: 25px; font-size: 0.9rem; }
+        .about-text h2 { font-size: 2rem; letter-spacing: 5px; margin-bottom: 20px; }
+        .about-text p { line-height: 1.8; color: #ccc; font-size: 0.9rem; }
 
-        .contact-form label { display: block; font-size: 10px; color: #888; margin-bottom: 10px; }
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            background: #111;
-            border: 1px solid #333;
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .contact-item span {
+            display: block;
+            font-size: 10px;
+            color: #777;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .contact-item p {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
             color: #fff;
-            padding: 15px;
-            margin-bottom: 25px;
-            font-size: 13px;
         }
 
-        .contact-form button {
-            background: #fff;
-            color: #000;
-            border: none;
-            padding: 12px 50px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
+        /* --- FOOTER --- */
+        footer {
+     padding: 60px 0;
+    text-align: center;
+    border-top: 1px solid #111;
         }
 
-        /* --- RESPONSIVO (CELULARES) --- */
+        footer p { font-size: 10px; letter-spacing: 1px; color: #444; }
+    .footer-link {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #444; /* Color gris oscuro por defecto */
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease; /* Suaviza la transición */
+}
+
+/* Efecto de iluminación al pasar el mouse */
+.footer-link:hover {
+    color: #fff; /* Se ilumina a blanco */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Crea un leve resplandor */
+    letter-spacing
+
+        /* --- RESPONSIVO --- */
         @media (max-width: 768px) {
+            nav { grid-template-columns: 1fr; gap: 15px; }
+            .menu-left, .logo, .social-right { justify-content: center; text-align: center; }
             .gallery-grid, .about-layout { grid-template-columns: 1fr; }
-            .img-half { width: 100%; }
-            .logo h1 { font-size: 16px; margin: 15px 0; }
-            nav { flex-direction: column; }
             .item { height: 350px; }
-            .about-text h2 { font-size: 1.5rem; margin-bottom: 20px; }
+            #about-section { padding: 50px 5%; }
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
     </style>
 </head>
 <body>
@@ -193,82 +192,91 @@
                 <a onclick="showSection('about')">ABOUT & CONTACT</a>
             </div>
             <div class="logo">
-                <h1 onclick="showSection('work')">LUDWIG FAVRE</h1>
+                <h1 onclick="showSection('work')">JEFRY CHACON</h1>
             </div>
             <div class="social-right">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-behance"></i></a>
+                <a href="https://instagram.com/tu_usuario" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
             </div>
         </nav>
     </header>
 
     <main id="work-page" class="gallery-grid">
-        <div class="item" onclick="showSection('project1')">
-            <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1000" alt="Pool">
-            <div class="overlay">
-                <h2>ARCHITECTURAL SWIMMING POOL</h2>
-                <p>2018</p>
-            </div>
+        <div class="item" onclick="showSection('projecta')">
+            <img src="AlseaLogo.png" alt="Pool">
+            <div class="overlay"><h2>Alsea Colombia</h2></div>
         </div>
-        <div class="item">
-            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000" alt="City">
-            <div class="overlay">
-                <h2>SEATTLE</h2>
-                <p>2018</p>
-            </div>
+        <div class="item" onclick="showSection('projectp')">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df" alt="City">
+            <div class="overlay"><h2>DOWNTOWN</h2></div>
         </div>
     </main>
 
-    <section id="project-detail">
+    <section id="project-alsea">
         <div class="project-intro">
-            <h2>ARCHITECTURAL SWIMMING POOL</h2>
-            <p>SPECIAL THANKS TO THE DIRECTOR OF THE VS AND TO THE DIRECTOR OF THIS POOL</p>
+            <h2>Alsea Colombia</h2>
+            <p>Colaboración interdisciplinaria para el desarrollo de piezas creativas.</p>
+            <p>Apoyo en diseño gráfico, edición de imágenes y creación de contenido visual para redes sociales.</p>
+            <p>Adaptación de la identidad visual de la marca paradiferentes formatos digitales y piezas impresas de punto de venta.</p>
         </div>
         <div class="detail-images">
-            <div class="img-full"><img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7" alt="Pool 1"></div>
-            <div class="img-half"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba" alt="Pool 2"></div>
-            <div class="img-half"><img src="https://images.unsplash.com/photo-1594498653385-d5172b532c00" alt="Pool 3"></div>
-            <div class="img-full"><img src="https://images.unsplash.com/photo-1565011523534-707a4fe11447" alt="Pool 4"></div>
+            <div class="img-full"><img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7"></div>
+            <div class="img-half"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba"></div>
+            <div class="img-half"><img src="https://images.unsplash.com/photo-1594498653385-d5172b532c00"></div>
+        </div>
+    </section>
+     <section id="project-personales">
+        <div class="project-intro">
+            <h2>Proyectos Personles</h2>
+            <p>Apoyo en diseño gráfico, edición de imágenes y creación de contenido visual para redes sociales.</p>
+            <p>Colaboración interdisciplinaria para el desarrollo de piezas creativas.</p>
+            <p>Adaptación de la identidad visual de la marca paradiferentes formatos digitales y piezas impresas de punto de venta.</p>
+        </div>
+        <div class="detail-images">
+            <div class="img-full"><img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7"></div>
+            <div class="img-half"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba"></div>
+            <div class="img-half"><img src="https://images.unsplash.com/photo-1594498653385-d5172b532c00"></div>
         </div>
     </section>
 
     <section id="about-section">
         <div class="about-layout">
             <div class="about-text">
-                <p>LUDWIG FAVRE, BORN IN FRANCE IN 1976. PHOTOGRAPHER SPECIALIZING IN MAJOR CITIES AND LANDSCAPES OF AMERICA.</p>
-                <p>HE HAS CREATED VISUALS ON A VARIETY OF MEDIA PLATFORMS FROM ADVERTISING CAMPAIGNS TO MAGAZINE EDITORIALS.</p>
+                <h2>Productor Multimedia Creativo en diseño y medios digitales</h2>
+                <p>Soy un apasionado del mundo multimedia, convencido de que el diseño puede mejorar la experiencia de cualquier usuario. Me destaco por el trabajo colaborativo y la toma de decisiones asertivas y dispuesto en el aprendizaje de nuevas dinámicas. Para mí, cada proyecto es la oportunidad ideal para mezclar curiosidad y técnica. Si buscas a alguien comprometido y con ganas de dar vida a grandes ideas, ¡estás en el lugar correcto!</p>
             </div>
-            <div class="contact-form">
-                <form action="https://formspree.io/f/tu-id" method="POST">
-                    <label>NAME *</label>
-                    <input type="text" name="name" placeholder="YOUR NAME..." required>
-                    <label>EMAIL ADDRESS *</label>
-                    <input type="email" name="email" placeholder="YOUR EMAIL ADDRESS..." required>
-                    <label>MESSAGE *</label>
-                    <textarea name="message" rows="5" placeholder="YOUR MESSAGE..."></textarea>
-                    <button type="submit">SUBMIT</button>
-                </form>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>Celular</span>
+                    <p>+57 313 890 6829</p>
+                </div>
+                <div class="contact-item">
+                    <span>Correo Electrónico</span>
+                    <p>jefry.c.chacon@gmail.com</p>
+                </div>
+                <div class="contact-item">
+                    <span>Ubicación</span>S
+                    <p>Bogotá, Colombia</p>
+                </div>
             </div>
         </div>
     </section>
 
+   <footer>
+    <a href="AQUÍ_VA_TU_ENLACE" target="_blank" class="footer-link">PORTAFOLIO</a>
+</footer>
+
     <script>
         function showSection(id) {
-            // Ocultar todo
-            document.getElementById('work-page').style.display = 'none';
-            document.getElementById('about-section').style.display = 'none';
-            document.getElementById('project-detail').style.display = 'none';
-
-            // Mostrar lo seleccionado
-            if (id === 'work') {
-                document.getElementById('work-page').style.display = 'grid';
-            } else if (id === 'about') {
-                document.getElementById('about-section').style.display = 'block';
-            } else if (id === 'project1') {
-                document.getElementById('project-detail').style.display = 'block';
-            }
+            document.getElementById('work-page').style.display = (id === 'work') ? 'grid' : 'none';
+            document.getElementById('about-section').style.display = (id === 'about') ? 'block' : 'none';
+            document.getElementById('project-alsea').style.display = (id === 'projecta') ? 'block' : 'none';
+            document.getElementById('project-personales').style.display = (id === 'projectp') ? 'block' : 'none';
             window.scrollTo(0, 0);
         }
     </script>
 </body>
+</html>
 </html>
