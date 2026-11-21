@@ -1,343 +1,1125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jefry Chacon | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* --- ESTILOS BASE --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
+  <!-- 1. CONFIGURACIÓN GENERAL -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e8e2d8">
+  <title>Jefry Chacon | Portfolio</title>
 
-        body {
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
+  <!-- Tipografía e iconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* --- NAVEGACIÓN --- */
-        header {
-            background-color: #000;
-            padding: 20px 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+  <!-- 2. ESTILOS CSS: COLORES, ESTRUCTURA Y ANIMACIONES -->
+  <style>
+    :root {
+      --bg: #e8e2d8;
+      --surface: #eeebe5;
+      --orange: #f06a23;
+      --blue: #394b9c;
+      --text: #262626;
+      --muted: #77736d;
+      --line: rgba(57,75,156,.25);
+      --divider: #f06a23;
+      --nav: rgba(238,235,229,.88);
+    }
 
-        nav {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-        }
+    /* Colores del modo oscuro */
+    body.dark {
+      --bg: #17191f;
+      --surface: #232630;
+      --orange: #f06a23;
+      --blue: #a6b1ff;
+      --text: #f2eee8;
+      --muted: #aaaab4;
+      --line: rgba(166,177,255,.3);
+      --divider: #a6b1ff;
+      --nav: rgba(35,38,48,.9);
+    }
 
-        .menu-left { display: flex; gap: 20px; }
-        .logo h1 { font-size: 20px; letter-spacing: 6px; font-weight: 300; text-transform: uppercase; cursor: pointer; }
-        .social-right { display: flex; justify-content: flex-end; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--blue);
+      font-family: "Space Grotesk", sans-serif;
+      transition: background .3s, color .3s;
+    }
+    button, a { font: inherit; }
+    a { color: inherit; }
 
-        .menu-left a, .social-right a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 11px;
-            letter-spacing: 2px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
+    /* 3. BARRA FLOTANTE DE NAVEGACIÓN */
+    .topbar {
+      position: fixed;
+      z-index: 50;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(720px, calc(100% - 28px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 12px 9px 19px;
+      border: 1px solid var(--line);
+      border-radius: 50px;
+      background: var(--nav);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 28px #00000012;
+    }
+    .brand {
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+    .navlinks { display: flex; gap: 4px; }
+    .navlinks a, .theme-button {
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      border-radius: 30px;
+      background: transparent;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      cursor: pointer;
+    }
+    .navlinks a:hover, .theme-button:hover {
+      color: var(--orange);
+      border-color: var(--orange);
+    }
+    .theme-button { border-color: var(--blue); }
 
-        .social-right a i { font-size: 18px; }
-        .menu-left a:hover, .social-right a:hover { opacity: 0.6; }
+    /* 4. ESTILOS COMPARTIDOS DE LAS SECCIONES */
+    .section {
+      position: relative;
+      padding: 125px clamp(20px, 6vw, 88px) 80px;
+    }
+    .section + .section { border-top: 2px solid var(--divider); }
+    .eyebrow {
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .section-title {
+      margin: 12px 0;
+      font-size: clamp(48px, 8vw, 100px);
+      line-height: .88;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+    }
+    .outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--blue);
+    }
 
-        /* --- CONTROL DE VISIBILIDAD INICIAL --- */
-        /* NUEVO: Se agregaron #project-envia y #project-conectartv para que inicien ocultos */
-        #project-alsea, 
-        #project-personales, 
-        #project-envia,
-        #project-conectartv,
-        #about-section { 
-            display: none; 
-        }
+    /* 5. SECCIÓN ABOUT: PRESENTACIÓN Y FOTOGRAFÍA */
+    #about {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+    }
+    .about-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 7vw;
+      align-items: center;
+    }
+    .about-copy h1 {
+      margin: 18px 0 24px;
+      font-size: clamp(50px, 7vw, 90px);
+      line-height: .86;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+    }
+    .about-copy h1 span { display: block; color: var(--orange); }
+    .about-copy p, .intro {
+      max-width: 490px;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .tags span {
+      padding: 7px 12px;
+      border: 1px solid var(--blue);
+      border-radius: 30px;
+      font-size: 10px;
+    }
 
-        /* --- GALERÍA PRINCIPAL (WORK) --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            width: 100%;
-        }
+   /* =========================================
+   FOTOGRAFÍA Y FIGURA NARANJA
+========================================= */
 
-        .item {
-            position: relative;
-            height: 500px;
-            overflow: hidden;
-            cursor: pointer;
-        }
+.portrait-wrap {
+    position: relative;
+    height: min(68vh, 650px);
+    min-height: 430px;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+    overflow: visible;
+}
 
-        .item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s ease;
-        }
+/* FIGURA NARANJA DETRÁS DE LA PERSONA */
+.portrait-back {
+    position: absolute;
+    z-index: 0;
+    top: 7%;
+    right: 4%;
+    width: 78%;
+    height: 82%;
+    background: var(--orange);
+    border-radius: 48% 48% 4px 4px;
+    transform: rotate(5deg);
+}
 
-        .overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.4s ease;
-        }
+/* FOTOGRAFÍA PRINCIPAL */
+.portrait {
+    position: relative;
+    z-index: 1;
+    width: 82%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
 
-        .item:hover .overlay { opacity: 1; }
-        .item:hover img { transform: scale(1.05); }
-        .overlay h2 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; }
+    /* Desenfoque para el efecto de lupa */
+    filter: blur(6px);
 
-        /* --- DETALLE DE PROYECTOS --- */
-        .project-intro { text-align: center; padding: 60px 20px; animation: fadeIn 0.5s ease; }
-        .project-intro h2 { letter-spacing: 4px; font-size: 1.4rem; margin-bottom: 15px; }
-        .project-intro p { font-size: 0.8rem; color: #aaa; letter-spacing: 1px; margin-bottom: 8px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+    border-radius: 46% 46% 4px 4px;
 
-        .detail-images { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px; }
-        .img-full { width: 100%; }
-        .img-half { width: calc(50% - 5px); }
-        .detail-images img { width: 100%; display: block; }
+    /* IMPORTANTE: evita que la piel se tiña de naranja */
+    mix-blend-mode: normal;
+}
 
-        /* --- SECCIÓN ABOUT & CONTACT --- */
-        #about-section {
-            padding: 100px 10%;
-            animation: fadeIn 0.5s ease;
-        }
+/* La fotografía conserva sus colores en ambos modos */
+body.dark .portrait {
+    mix-blend-mode: normal;
+}
 
-        .about-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-        }
+    /* La lupa contiene una segunda copia nítida de la fotografía */
+    /* =========================================
+   LUPA INTERACTIVA
+========================================= */
 
-        .about-text h2 { font-size: 1.8rem; letter-spacing: 5px; margin-bottom: 25px; line-height: 1.3; }
-        .about-text p { line-height: 1.8; color: #ccc; font-size: 0.95rem; margin-bottom: 15px; }
+.lens {
+    position: absolute;
+    z-index: 5;
 
-        .contact-info { display: flex; flex-direction: column; gap: 25px; }
-        .contact-item { border-bottom: 1px solid #333; padding-bottom: 15px; }
-        .contact-item span { display: block; font-size: 10px; color: #777; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
-        .contact-item p { font-size: 1.1rem; letter-spacing: 1px; color: #fff; }
+    width: clamp(150px, 18vw, 220px);
+    aspect-ratio: 1;
 
-        /* --- FOOTER --- */
-        footer { padding: 60px 0; text-align: center; border-top: 1px solid #111; margin-top: 50px; }
-        .footer-link { font-size: 10px; letter-spacing: 2px; color: #444; text-decoration: none; text-transform: uppercase; transition: all 0.3s ease; }
-        .footer-link:hover { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); }
+    overflow: hidden;
 
-        /* --- RESPONSIVO --- */
-        @media (max-width: 768px) {
-            nav { grid-template-columns: 1fr; gap: 15px; }
-            .menu-left, .logo, .social-right { justify-content: center; text-align: center; }
-            .gallery-grid, .about-layout { grid-template-columns: 1fr; }
-            .item { height: 350px; }
-            #about-section { padding: 50px 5%; }
-            .about-text h2 { font-size: 1.4rem; }
-        }
+    border: 1px solid var(--surface);
+    outline: 1px solid var(--blue);
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    background: var(--surface);
+
+    box-shadow: 0 8px 28px #0004;
+
+    pointer-events: none;
+    opacity: 0;
+
+    transform: translate(-50%, -50%);
+}
+
+/* =========================================
+   LUPA INTERACTIVA
+========================================= */
+
+.lens {
+    position: absolute;
+    z-index: 5;
+
+    width: clamp(150px, 18vw, 220px);
+    aspect-ratio: 1;
+
+    overflow: hidden;
+
+    border: 1px solid var(--surface);
+    outline: 1px solid var(--blue);
+
+    background: var(--surface);
+
+    box-shadow: 0 8px 28px #0004;
+
+    pointer-events: none;
+    opacity: 0;
+
+    transform: translate(-50%, -50%);
+}
+
+/* Imagen nítida dentro de la lupa */
+.lens-image {
+    position: absolute;
+    z-index: 1;
+
+    max-width: none;
+    object-fit: cover;
+    object-position: top center;
+
+    filter: none;
+    mix-blend-mode: normal;
+
+    border-radius: 0;
+}
+
+/* Líneas de enfoque */
+.lens::before,
+.lens::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    background: var(--orange);
+    pointer-events: none;
+}
+
+.lens::before {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.lens::after {
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+}
+
+/* Etiqueta de la lupa */
+.lens small {
+    position: absolute;
+    z-index: 3;
+    bottom: 8px;
+    left: 8px;
+    padding: 4px 6px;
+    background: var(--surface);
+    color: var(--blue);
+    font-size: 8px;
+    letter-spacing: .1em;
+}
+
+.portrait-wrap.active .lens {
+    opacity: 1;
+}
+}r-radius: 0;
+    }
+    .lens::before, .lens::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      background: var(--orange);
+      pointer-events: none;
+    }
+    .lens::before { left: 50%; top: 0; width: 1px; height: 100%; }
+    .lens::after { left: 0; top: 50%; width: 100%; height: 1px; }
+    .lens small {
+      position: absolute;
+      z-index: 3;
+      bottom: 8px;
+      left: 8px;
+      padding: 4px 6px;
+      background: var(--surface);
+      color: var(--blue);
+      font-size: 8px;
+      letter-spacing: .1em;
+    }
+    .portrait-wrap.active .lens { opacity: 1; }
+    .portrait-note {
+      position: absolute;
+      right: 0;
+      bottom: 5%;
+      writing-mode: vertical-rl;
+      font-size: 9px;
+      letter-spacing: .15em;
+    }
+
+    /* 6. SECCIÓN WORK: COLECCIÓN DE DISCOS / ESTUCHES */
+    #work { min-height: 100svh; overflow: hidden; }
+    .work-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+    }
+    .work-head .intro { max-width: 360px; margin-bottom: 4px; font-size: 13px; }
+    .stage {
+      position: relative;
+      height: clamp(440px, 60vw, 640px);
+      margin: 20px calc(clamp(20px, 6vw, 88px) * -1) 0;
+      overflow: hidden;
+      perspective: 1300px;
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
+    }
+    .stage:active { cursor: grabbing; }
+    .glow {
+      position: absolute;
+      top: 52%;
+      left: 50%;
+      width: min(60vw, 650px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, #394b9c20, transparent 68%);
+      pointer-events: none;
+    }
+    #track { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .case {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(190px, 21vw, 270px);
+      height: clamp(285px, 31vw, 380px);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      filter: drop-shadow(8px 18px 16px #0004);
+      transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .4s;
+    }
+    .shell {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border: 1px solid #ffffffd9;
+      border-radius: 5px;
+      background: linear-gradient(110deg,#ffffff55,#ffffff08 20%,#ffffff33 48%,#00000012 52%,#ffffff30);
+      box-shadow: inset 3px 0 4px #ffffff88, inset -3px 0 5px #0002;
+    }
+    .shell::before {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      bottom: 0;
+      left: 8px;
+      width: 8px;
+      border-right: 1px solid #fff8;
+      background: linear-gradient(90deg,#ffffffaa,#5552,#fff5);
+    }
+    .art {
+      position: absolute;
+      inset: 8px 8px 8px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: 17px 14px;
+      background: var(--art);
+      color: white;
+      text-align: left;
+    }
+    .art img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .72;
+    }
+    .art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(#0001 15%,#0009);
+    }
+    .art span { position: relative; z-index: 2; }
+    .case-no, .case-type { font-size: 9px; letter-spacing: .14em; }
+    .case-name {
+      font-size: clamp(24px, 3vw, 35px);
+      font-weight: 700;
+      line-height: .9;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+    .case.active .shell { outline: 2px solid var(--orange); outline-offset: 3px; }
+    .controls {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin-top: -2px;
+    }
+    .round-button {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--blue);
+      cursor: pointer;
+    }
+    .round-button:hover { border-color: var(--orange); background: var(--orange); color: white; }
+    .counter { min-width: 75px; color: var(--text); text-align: center; font-size: 10px; letter-spacing: .15em; }
+    .hint { margin-top: 13px; color: var(--muted); text-align: center; font-size: 9px; letter-spacing: .14em; }
+
+    /* 7. SECCIÓN CONTACTO */
+    #connect { min-height: 65vh; }
+    .contact-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 35px;
+      margin-top: 25px;
+      padding: clamp(25px,5vw,58px);
+      overflow: hidden;
+      border: 1px solid var(--blue);
+      background: var(--surface);
+    }
+    .contact-card h2 {
+      margin: 14px 0 20px;
+      font-size: clamp(42px,6vw,76px);
+      line-height: .9;
+      letter-spacing: -.07em;
+      text-transform: uppercase;
+    }
+    .contact-card p { max-width: 420px; color: var(--text); line-height: 1.6; }
+    .contact-links { z-index: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 15px;
+      border: 1px solid var(--blue);
+      background: var(--bg);
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .contact-link:hover { border-color: var(--orange); color: var(--orange); }
+    .copy-button {
+      padding: 12px 15px;
+      border: 1px solid var(--orange);
+      background: transparent;
+      color: var(--orange);
+      text-align: left;
+      cursor: pointer;
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 25px clamp(20px,6vw,88px);
+      border-top: 2px solid var(--divider);
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: .12em;
+    }
+
+    /* 8. VENTANA QUE SE ABRE AL SELECCIONAR UN DISCO */
+    .modal {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: #10121bc9;
+      backdrop-filter: blur(13px);
+    }
+    .modal.open { display: grid; }
+    .panel {
+      width: min(1080px,100%);
+      max-height: 90vh;
+      overflow: auto;
+      border: 1px solid var(--blue);
+      background: var(--bg);
+    }
+    .modalbar {
+      position: sticky;
+      z-index: 3;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg);
+      font-size: 10px;
+      letter-spacing: .18em;
+    }
+    .close-button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--blue);
+      cursor: pointer;
+    }
+    .modalbody { padding: clamp(20px,4vw,45px); }
+    .modalhead {
+      display: grid;
+      grid-template-columns: 1fr .8fr;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 25px;
+    }
+    .modalhead h2 {
+      margin: 8px 0;
+      font-size: clamp(38px,7vw,72px);
+      line-height: .9;
+      letter-spacing: -.07em;
+      text-transform: uppercase;
+    }
+    .modalhead p { color: var(--text); font-size: 13px; line-height: 1.6; }
+    .media-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .media-gallery img, .media-gallery iframe {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border: 0;
+      background: var(--surface);
+      object-fit: cover;
+    }
+    .media-gallery .wide { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+    .placeholder {
+      min-height: 190px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      border: 1px dashed var(--blue);
+      background: var(--surface);
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+    .modalfoot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-top: 25px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    .back-button {
+      padding: 11px 16px;
+      border: 1px solid var(--orange);
+      border-radius: 30px;
+      background: var(--surface);
+      color: var(--orange);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 9. AJUSTES PARA CELULARES */
+    @media (max-width: 760px) {
+      .topbar { top: 9px; padding: 7px 8px 7px 13px; }
+      .brand { font-size: 9px; }
+      .navlinks a { padding: 8px; font-size: 9px; }
+      .section { padding: 105px 20px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+      .about-copy { order: 1; }
+      .portrait-wrap { order: 2; height: 58vh; min-height: 350px; }
+      .work-head { display: block; }
+      .work-head .intro { margin-top: 16px; }
+      .stage { height: 450px; margin-right: -20px; margin-left: -20px; }
+      .case { width: 190px; height: 285px; }
+      .contact-card { grid-template-columns: 1fr; }
+      .modalhead { grid-template-columns: 1fr; gap: 10px; }
+      .media-gallery { grid-template-columns: 1fr; }
+      .media-gallery .wide { grid-column: auto; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
+  <!-- 10. HTML: BARRA SUPERIOR -->
+  <header class="topbar">
+    <a class="brand" href="#about">JEFRY CHACON</a>
+    <nav class="navlinks" aria-label="Navegación principal">
+      <a href="#about">ABOUT</a>
+      <a href="#work">WORK</a>
+      <a href="#connect">CONNECT</a>
+    </nav>
+    <button class="theme-button" id="themeButton" aria-label="Cambiar modo claro u oscuro">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </header>
 
-    <header>
-        <nav>
-            <div class="menu-left">
-                <a onclick="showSection('work-page')">WORK</a>
-                <a onclick="showSection('about-section')">ABOUT & CONTACT</a>
-            </div>
-            <div class="logo">
-                <h1 onclick="showSection('work-page')">JEFRY CHACON</h1>
-            </div>
-            <div class="social-right">
-                <a href="https://www.instagram.com/ccc_jeff/" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
-        </nav>
-    </header>
-
-    <main id="work-page" class="gallery-grid">
-        <div class="item" onclick="showSection('project-alsea')">
-            <img src="AlseaLogo.png" alt="Alsea">
-            <div class="overlay"><h2>Alsea Colombia</h2></div>
-        </div>
-        <div class="item" onclick="showSection('project-personales')">
-            <img src="ProyectosP.png" alt="Proyectos Personales">
-            <div class="overlay"><h2>Proyectos Personales</h2></div>
-        </div>
-        
-        <div class="item" onclick="showSection('project-envia')">
-            <img src="EnviaLogo.jpeg" alt="Envia"> <div class="overlay"><h2>Envia</h2></div>
+  <main>
+    <!-- 11. HTML: ABOUT / CAMBIA AQUÍ TUS TEXTOS DE PRESENTACIÓN -->
+    <section class="section" id="about">
+      <div class="about-grid">
+        <div class="about-copy">
+          <div class="eyebrow">WEB PROYECTOS — DISEÑADOR MULTIDISCIPLINAR</div>
+          <h1>Ideas en <span>movimiento.</span></h1>
+          <p>Soy Jefry Chacon, diseñador multidisciplinario enfocado en crear soluciones visuales que conectan diseño, comunicación y experiencias digitales. Me interesa explorar, aprender y transformar ideas en proyectos con intención.</p>
+          <div class="tags">
+            <span>Branding</span><span>Diseño gráfico</span><span>Audiovisual</span><span>UX/UI</span><span>Motion</span>
+          </div>
         </div>
 
-        <div class="item" onclick="showSection('project-conectartv')">
-            <img src="ConectarTVLogo.jpg" alt="Conectar TV"> <div class="overlay"><h2>Conectar TV</h2></div>
+        <!-- La imagen debe llamarse jefry-retrato.png y estar junto a este HTML -->
+        <div class="portrait-wrap" id="portraitWrap">
+          <div class="portrait-back"></div>
+          <img class="portrait" id="portrait" src="jefry-retrato.png" alt="Retrato de Jefry Chacon">
+          <div class="lens" id="lens"><img class="lens-image" id="lensImage" src="jefry-retrato.png" alt=""><small>FOCUS / JCH</small></div>
+          <div class="portrait-note">MOVE TO EXPLORE ↘</div>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <section id="project-alsea">
-        <div class="project-intro">
-            <h2>Alsea Colombia</h2>
-            <p>Colaboración interdisciplinaria para el desarrollo de piezas creativas.</p>
-            <p>Apoyo en diseño gráfico, edición de imágenes y creación de contenido visual para redes sociales.</p>
-            <p>Adaptación de la identidad visual de la marca para diferentes formatos digitales y piezas impresas de punto de venta.</p>
+    <!-- 12. HTML: WORK / AQUÍ SE INSERTAN AUTOMÁTICAMENTE LOS DISCOS -->
+    <section class="section" id="work">
+      <div class="work-head">
+        <div>
+          <div class="eyebrow">02 / SELECTED WORK</div>
+          <h2 class="section-title">The <span class="outline">collection.</span></h2>
         </div>
-       <div class="detail-images">
+        <p class="intro">Una colección de experiencias, marcas y exploraciones visuales. Desliza para descubrir las portadas y selecciona un estuche para abrir cada proyecto.</p>
+      </div>
+      <div class="stage" id="stage">
+        <div class="glow"></div>
+        <div id="track"></div>
+      </div>
+      <div class="controls">
+        <button class="round-button" id="prevButton" aria-label="Proyecto anterior"><i class="fa-solid fa-arrow-left"></i></button>
+        <span class="counter" id="counter">01 / 13</span>
+        <button class="round-button" id="nextButton" aria-label="Proyecto siguiente"><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+      <div class="hint">DRAG / SCROLL TO EXPLORE — CLICK A CASE TO OPEN</div>
+    </section>
 
-     <div class="img-half">
-    <iframe 
-        src="https://player.vimeo.com/video/1167072140?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        width="100%" 
-        height="360" 
-        frameborder="0" 
-        allow="autoplay; fullscreen" 
-        allowfullscreen>
-    </iframe>
+    <!-- 13. HTML: CONNECT / CAMBIA AQUÍ TUS DATOS DE CONTACTO -->
+    <section class="section" id="connect">
+      <div class="eyebrow">03 / CONNECT</div>
+      <div class="contact-card">
+        <div>
+          <div class="eyebrow">HAVE A PROJECT IN MIND?</div>
+          <h2>Let's make<br>it happen<span style="color:var(--orange)">.</span></h2>
+          <p>¿Tienes una idea, un proyecto o una oportunidad de colaboración? Hablemos y construyamos algo juntos.</p>
+        </div>
+       
+<div class="contact-links">
+
+    <!-- CORREO -->
+    <a class="contact-link" href="mailto:jefrycamilochacon@gmail.com">
+        <i class="fa-regular fa-envelope"></i>
+        jefrycamilochacon@gmail.com
+    </a>
+
+    <!-- INSTAGRAM -->
+    <a class="contact-link" href="https://www.instagram.com/ccc_jeff/" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i>
+        @ccc_jeff
+    </a>
+
+    <!-- BEHANCE -->
+    <a class="contact-link" href="https://www.behance.net/gallery/258435713/Portafolio-2026" target="_blank" rel="noopener">
+        <i class="fa-brands fa-behance"></i>
+        Behance
+    </a>
+
+    <!-- TELÉFONO -->
+    <a class="contact-link" href="tel:+573138906829">
+        <i class="fa-solid fa-phone"></i>
+        +57 313 890 6829
+    </a>
+
+    <!-- COPIAR CORREO -->
+    <button class="copy-button" id="copyButton">
+        <i class="fa-regular fa-copy"></i>
+        <span>Copiar correo</span>
+    </button>
+
 </div>
-     <div class="img-half">
-    <iframe 
-        src="https://player.vimeo.com/video/1167072152?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        width="100%" 
-        height="360" 
-        frameborder="0" 
-        allow="autoplay; fullscreen" 
-        allowfullscreen>
-    </iframe>
-</div>
 
-        <div class="detail-images">
-            <div class="img-full"><img src="a1.png"></div>
-            <div class="img-half"><img src="a2.png"></div>
-            <div class="img-half"><img src="a3.png"></div>
-        </div>
+      </div>
     </section>
+  </main>
 
-    <section id="project-personales">
-        <div class="project-intro">
-            <h2>Proyectos Personales</h2>
-            <p>Exploración creativa y desarrollo de marca personal.</p>
-            <p>Enfoque en nuevas tendencias de diseño multimedia y experimentación visual.</p>
-            <p>Desarrollo & Diseño Web - Edición de Video & Post-producción.</p>
+  <footer>
+    <span>JEFRY CHACON © 2026</span>
+    <span>DESIGN / MOTION / DIGITAL</span>
+    <a href="#about">BACK TO TOP ↑</a>
+  </footer>
+
+  <!-- 14. HTML: VENTANA DE DETALLE DEL PROYECTO -->
+  <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="panel">
+      <div class="modalbar">
+        <span id="modalKicker">PROJECT / 01</span>
+        <button class="close-button" id="closeModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modalbody">
+        <div class="modalhead">
+          <div><div class="eyebrow" id="modalCategory"></div><h2 id="modalTitle"></h2></div>
+          <p id="modalDescription"></p>
         </div>
-      <div class="img-full">
-    <iframe 
-        src="https://player.vimeo.com/video/1167072159?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        width="100%" 
-        height="360" 
-        frameborder="0" 
-        allow="autoplay; fullscreen" 
-        allowfullscreen>
-    </iframe>
-</div>
-        <div class="detail-images">
-            <div class="img-full"><img src="p1.png"></div>
-              <div class="img-full"><img src="p2.png"></div>
-              <div class="img-full"><img src="p3.png"></div>
-              <div class="img-half"><img src="p4.png"></div>
+        <div class="media-gallery" id="mediaGallery"></div>
+        <div class="modalfoot">
+          <span class="eyebrow">JEFRY CHACON / SELECTED WORK</span>
+          <button class="back-button" id="backToCollection">← VOLVER A LA COLECCIÓN</button>
         </div>
-        
-    </section>
+      </div>
+    </div>
+  </div>
 
-  <section id="project-envia">
-        <div class="project-intro">
-            <h2>Envia | Propuesta Creativa</h2>
-            <p>Desarrollo de propuesta audiovisual y gráfica para campaña promocional.</p>
-            <p>Creación de un video dinámico y diseño de piezas publicitarias enfocadas en la difusión de un curso de acondicionamiento físico. El enfoque principal fue transmitir energía y dinamismo para captar la atención del público objetivo.</p>
-        </div>
-         <div class="img-full">
-    <iframe 
-        src="https://player.vimeo.com/video/1187433643?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        width="100%" 
-        height="360" 
-        frameborder="0" 
-        allow="autoplay; fullscreen" 
-        allowfullscreen>
-    </iframe>
-</div>
-        <div class="detail-images">
-            <div class="img-half"><img src="e1.png" alt="Pieza Gráfica Gym"></div>
-            <div class="img-half"><img src="e2.png" alt="Captura Video Envia"></div>
-        </div>
-    </section>
+  <!-- 15. JAVASCRIPT: CONTENIDO DE LOS DISCOS. EDITA AQUÍ NOMBRES, TEXTOS E IMÁGENES -->
+  <script>
+    const projects = [
+      {
+        title: "Alsea",
+        category: "Experiencia laboral",
+        color: "#394b9c",
+        description: "Colaboración interdisciplinaria para el desarrollo de piezas creativas. Apoyo en diseño gráfico, edición de imágenes y creación de contenido visual para redes sociales y puntos de venta.",
+        images: ["AlseaLogo.png", "a1.png", "a2.png", "a3.png"],
+        videos: ["https://player.vimeo.com/video/1167072140", "https://player.vimeo.com/video/1167072152"]
+      },
+      {
+        title: "Sutherland",
+        category: "Experiencia laboral",
+        color: "#263d65",
+        description: "Diseño gráfico y comunicación visual para campañas, contenidos y necesidades de comunicación de la marca. Reemplaza este texto por una descripción de tus responsabilidades y proyectos.",
+        images: []
+      },
+      {
+        title: "Trama",
+        category: "Marca personal",
+        color: "#93472f",
+        description: "Desarrollo integral de una marca de moda urbana: identidad visual, sistema gráfico, diseño de prendas, estampados y aplicaciones de marca.",
+        images: ["trama-portada.png", "trama-01.png", "trama-02.png", "trama-03.png"]
+      },
+      {
+        title: "Motion Graphics",
+        category: "Audiovisual",
+        color: "#394b9c",
+        description: "Animación gráfica, tipografía cinética y composición audiovisual para comunicar ideas a través del movimiento.",
+        images: [],
+        videos: ["https://player.vimeo.com/video/1167072159"]
+      },
+      {
+        title: "Ilustración",
+        category: "Exploración visual",
+        color: "#e36a3a",
+        description: "Ilustración digital, exploración de formas, color, personajes y lenguajes gráficos propios.",
+        images: []
+      },
+      {
+        title: "Edición de Video",
+        category: "Audiovisual",
+        color: "#283b55",
+        description: "Edición, montaje, ritmo narrativo y postproducción de piezas audiovisuales para diferentes formatos y plataformas.",
+        images: [],
+        videos: ["https://player.vimeo.com/video/1187433643"]
+      },
+      {
+        title: "Digital Experiences",
+        category: "UX/UI · Web · App",
+        color: "#5369a7",
+        description: "Diseño de interfaces, arquitectura visual, prototipado y maquetación de experiencias digitales para web y aplicaciones.",
+        images: []
+      },
+      {
+        title: "Experimental Lab",
+        category: "Proyectos personales",
+        color: "#b84f25",
+        description: "Un espacio para experimentar con dirección de arte, técnicas visuales, conceptos y nuevas herramientas creativas.",
+        images: ["ProyectosP.png", "p1.png", "p2.png", "p3.png", "p4.png"]
+      },
+      {
+        title: "Fotografía y Retoque",
+        category: "Fotografía",
+        color: "#4a5360",
+        description: "Fotografía, retoque digital, tratamiento de imagen y exploración de atmósferas visuales.",
+        images: []
+      },
+      {
+        title: "Branding & Identidad",
+        category: "Identidad visual",
+        color: "#394b9c",
+        description: "Construcción de identidades visuales, sistemas gráficos, recursos de marca y aplicaciones para distintos puntos de contacto.",
+        images: []
+      },
+      {
+        title: "Campañas Publicitarias",
+        category: "Comunicación",
+        color: "#f06a23",
+        description: "Conceptualización y desarrollo de campañas: piezas gráficas, adaptaciones, comunicación digital y contenido audiovisual.",
+        images: ["EnviaLogo.png", "e1.png", "e2.png"]
+      },
+      {
+        title: "Diseño Editorial",
+        category: "Diseño gráfico",
+        color: "#394b9c",
+        description: "Diseño y composición de publicaciones, retículas, jerarquía tipográfica, piezas editoriales y narrativas visuales.",
+        images: []
+      },
+      {
+        title: "Packaging",
+        category: "Diseño de producto",
+        color: "#8d583d",
+        description: "Exploración de empaques, etiquetas, sistemas gráficos y presentación visual de productos.",
+        images: []
+      }
+    ];
 
-    <section id="project-conectartv">
-        <div class="project-intro">
-            <h2>Conectar TV | Comunicación Interna</h2>
-            <p>Diseño de piezas gráficas orientadas a la comunicación interna corporativa.</p>
-            <p>El objetivo de este reto creativo fue desarrollar material visual claro, atractivo y alineado con la identidad corporativa para transmitir mensajes efectivos a los colaboradores, facilitando el flujo de información en la empresa.</p>
-        </div>
-        <div class="detail-images">
-            <div class="img-half"><img src="c1.png" alt="Comunicación Interna 1"></div>
-            <div class="img-half"><img src="c2.png" alt="Comunicación Interna 2"></div>
-            <div class="img-half"><img src="c3.png" alt="Comunicación Interna 3"></div>
-            <div class="img-half"><img src="c4.png" alt="Comunicación Interna 4"></div>
-            <div class="img-half"><img src="c5.png" alt="Comunicación Interna 5"></div>
-        </div>
-    </section>
+    /* 16. JAVASCRIPT: CREAR, MOVER Y SELECCIONAR LOS DISCOS */
+    const track = document.getElementById("track");
+    const stage = document.getElementById("stage");
+    const counter = document.getElementById("counter");
+    let active = 0;
+    let pointerStartX = null;
+    let dragged = false;
 
-    <section id="about-section">
-        <div class="about-layout">
-            <div class="about-text">
-                <h2>Productor Multimedia Creativo en diseño y medios digitales</h2>
-                <p>Soy un apasionado del mundo multimedia, convencido de que el diseño puede mejorar la experiencia de cualquier usuario. Me destaco por el trabajo colaborativo y la toma de decisiones asertivas y dispuesto en el aprendizaje de nuevas dinámicas.</p>
-                <p>Para mí, cada proyecto es la oportunidad ideal para mezclar curiosidad y técnica. Si buscas a alguien comprometido y con ganas de dar vida a grandes ideas, ¡estás en el lugar correcto!</p>
-            </div>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <span>Celular</span>
-                    <p>+57 313 890 6829</p>
-                </div>
-                <div class="contact-item">
-                    <span>Correo Electrónico</span>
-                    <p>jefry.c.chacon@gmail.com</p>
-                </div>
-                <div class="contact-item">
-                    <span>Ubicación</span>
-                    <p>Bogotá, Colombia</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    const wrapIndex = (number, total) => (number % total + total) % total;
 
-    <footer>
-        <a href="https://www.calameo.com/read/0081615117e534cb14d13" onclick="showSection('work-page')" class="footer-link">VOLVER AL PORTAFOLIO</a>
-    </footer>
+    function updateDiscs() {
+      [...track.children].forEach((disc, index) => {
+        let distance = index - active;
+        if (distance > projects.length / 2) distance -= projects.length;
+        if (distance < -projects.length / 2) distance += projects.length;
 
-    <script>
-        function showSection(id) {
-            // NUEVO: Se agregaron 'project-envia' y 'project-conectartv' al array de secciones
-            const sections = ['work-page', 'about-section', 'project-alsea', 'project-personales', 'project-envia', 'project-conectartv'];
-            
-            // Ocultar todas las secciones
-            sections.forEach(sectionId => {
-                const element = document.getElementById(sectionId);
-                if (element) {
-                    element.style.display = 'none';
-                }
-            });
+        const absoluteDistance = Math.abs(distance);
+        const spacing = window.innerWidth < 760 ? 95 : 125;
+        const scale = Math.max(.55, 1 - absoluteDistance * .075);
+        const x = distance * spacing;
+        const y = absoluteDistance * 5;
+        const z = -absoluteDistance * 65;
 
-            // Mostrar la sección solicitada
-            const target = document.getElementById(id);
-            if (target) {
-                // Si es la galería principal usamos 'grid', si no 'block'
-                target.style.display = (id === 'work-page') ? 'grid' : 'block';
-            }
+        disc.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${y}px, ${z}px) rotateY(${distance === 0 ? 0 : distance > 0 ? -12 : 12}deg) scale(${scale})`;
+        disc.style.zIndex = 100 - absoluteDistance;
+        disc.style.opacity = absoluteDistance > 5 ? 0 : Math.max(.3, 1 - absoluteDistance * .12);
+        disc.style.pointerEvents = absoluteDistance > 5 ? "none" : "auto";
+        disc.classList.toggle("active", distance === 0);
+      });
 
-            // Volver arriba de la página automáticamente
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+      counter.textContent = `${String(active + 1).padStart(2,"0")} / ${String(projects.length).padStart(2,"0")}`;
+    }
+
+    function moveDisc(direction) {
+      active = wrapIndex(active + direction, projects.length);
+      updateDiscs();
+    }
+
+    projects.forEach((project, index) => {
+      const disc = document.createElement("button");
+      disc.type = "button";
+      disc.className = "case";
+      disc.setAttribute("aria-label", `Abrir proyecto ${project.title}`);
+
+      const cover = project.images && project.images.length
+        ? `<img src="${project.images[0]}" alt="" onerror="this.style.display='none'">`
+        : "";
+
+      disc.innerHTML = `
+        <span class="shell">
+          <span class="art" style="--art:${project.color}">
+            ${cover}
+            <span class="case-no">${String(index + 1).padStart(2,"0")} / JCH</span>
+            <span class="case-name">${project.title}</span>
+            <span class="case-type">${project.category}</span>
+          </span>
+        </span>`;
+
+      disc.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (dragged) return;
+        active = index;
+        updateDiscs();
+        openProject(index);
+      });
+
+      track.appendChild(disc);
+    });
+
+    updateDiscs();
+    document.getElementById("prevButton").addEventListener("click", () => moveDisc(-1));
+    document.getElementById("nextButton").addEventListener("click", () => moveDisc(1));
+
+    /* Rueda del mouse: pasa de un disco al siguiente */
+    stage.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      moveDisc(event.deltaY > 0 || event.deltaX > 0 ? 1 : -1);
+    }, { passive: false });
+
+    /* Arrastre: no se usa pointer capture para no bloquear el clic de cada disco */
+    stage.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0) return;
+      pointerStartX = event.clientX;
+      dragged = false;
+    });
+
+    window.addEventListener("pointerup", (event) => {
+      if (pointerStartX === null) return;
+      const distance = event.clientX - pointerStartX;
+
+      if (Math.abs(distance) > 22) {
+        dragged = true;
+        moveDisc(distance < 0 ? 1 : -1);
+        setTimeout(() => { dragged = false; }, 180);
+      }
+      pointerStartX = null;
+    });
+
+    stage.addEventListener("pointercancel", () => { pointerStartX = null; });
+    window.addEventListener("resize", updateDiscs);
+
+    /* 17. JAVASCRIPT: ABRIR Y CERRAR LA FICHA DE CADA PROYECTO */
+    const modal = document.getElementById("projectModal");
+    const mediaGallery = document.getElementById("mediaGallery");
+
+    function addPlaceholder(message) {
+      const item = document.createElement("div");
+      item.className = "placeholder";
+      item.textContent = message;
+      mediaGallery.appendChild(item);
+    }
+
+    function openProject(index) {
+      const project = projects[index];
+      document.getElementById("modalKicker").textContent = `PROJECT / ${String(index + 1).padStart(2,"0")}`;
+      document.getElementById("modalCategory").textContent = project.category;
+      document.getElementById("modalTitle").textContent = project.title;
+      document.getElementById("modalDescription").textContent = project.description;
+      mediaGallery.innerHTML = "";
+
+      (project.images || []).forEach((file, imageIndex) => {
+        const image = document.createElement("img");
+        image.src = file;
+        image.alt = `${project.title} — imagen ${imageIndex + 1}`;
+        if (imageIndex === 0 && project.images.length > 2) image.classList.add("wide");
+        image.onerror = () => {
+          const message = document.createElement("div");
+          message.className = "placeholder";
+          message.textContent = `No se encontró ${file}. Revisa el nombre del archivo.`;
+          image.replaceWith(message);
+        };
+        mediaGallery.appendChild(image);
+      });
+
+      (project.videos || []).forEach((url) => {
+        const video = document.createElement("iframe");
+        video.src = `${url}?title=0&byline=0&portrait=0`;
+        video.title = `${project.title} — video`;
+        video.allow = "autoplay; fullscreen; picture-in-picture";
+        video.allowFullscreen = true;
+        mediaGallery.appendChild(video);
+      });
+
+      if (!mediaGallery.children.length) {
+        addPlaceholder("Próximamente: añade imágenes o videos de este proyecto.");
+      }
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeProject() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+      mediaGallery.querySelectorAll("iframe").forEach((frame) => { frame.src = ""; });
+    }
+
+    document.getElementById("closeModal").addEventListener("click", closeProject);
+    document.getElementById("backToCollection").addEventListener("click", closeProject);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeProject();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeProject();
+    });
+
+    /* 18. JAVASCRIPT: LUPA INTERACTIVA SOBRE LA FOTO */
+    const portraitWrap = document.getElementById("portraitWrap");
+    const portrait = document.getElementById("portrait");
+    const lens = document.getElementById("lens");
+    const lensImage = document.getElementById("lensImage");
+
+    function prepareLensImage() {
+      if (!portrait.complete || !portrait.naturalWidth) return;
+      lensImage.src = portrait.currentSrc || portrait.src;
+      lensImage.style.width = `${portrait.offsetWidth}px`;
+      lensImage.style.height = `${portrait.offsetHeight}px`;
+    }
+
+    portrait.addEventListener("load", prepareLensImage);
+    window.addEventListener("resize", prepareLensImage);
+    prepareLensImage();
+
+    portraitWrap.addEventListener("pointerenter", () => {
+      prepareLensImage();
+      portraitWrap.classList.add("active");
+    });
+    portraitWrap.addEventListener("pointerleave", () => {
+      portraitWrap.classList.remove("active");
+    });
+    portraitWrap.addEventListener("pointermove", (event) => {
+      if (!portrait.complete || !portrait.naturalWidth) return;
+
+      const wrapRect = portraitWrap.getBoundingClientRect();
+      const imageRect = portrait.getBoundingClientRect();
+      const lensRect = lens.getBoundingClientRect();
+      const lensWidth = lens.offsetWidth;
+      const lensHeight = lens.offsetHeight;
+
+      const pointerX = event.clientX - wrapRect.left;
+      const pointerY = event.clientY - wrapRect.top;
+      lens.style.left = `${pointerX}px`;
+      lens.style.top = `${pointerY}px`;
+
+      /* Desplaza la copia nítida dentro del recuadro para seguir el cursor */
+      const lensLeft = event.clientX - lensWidth / 2;
+      const lensTop = event.clientY - lensHeight / 2;
+      lensImage.style.left = `${imageRect.left - lensLeft}px`;
+      lensImage.style.top = `${imageRect.top - lensTop}px`;
+    });
+
+    /* 19. JAVASCRIPT: MODO CLARO / OSCURO */
+    const themeButton = document.getElementById("themeButton");
+
+    function setTheme(isDark) {
+      document.body.classList.toggle("dark", isDark);
+      themeButton.innerHTML = isDark
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
+      document.querySelector('meta[name="theme-color"]').content = isDark ? "#17191f" : "#e8e2d8";
+    }
+
+    let savedDarkMode = false;
+    try { savedDarkMode = localStorage.getItem("jch-theme") === "dark"; } catch (error) {}
+    setTheme(savedDarkMode);
+
+    themeButton.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark");
+      setTheme(isDark);
+      try { localStorage.setItem("jch-theme", isDark ? "dark" : "light"); } catch (error) {}
+    });
+
+    /* 20. JAVASCRIPT: COPIAR CORREO */
+    document.getElementById("copyButton").addEventListener("click", async () => {
+      const label = document.querySelector("#copyButton span");
+      try {
+        await navigator.clipboard.writeText("jefrycamilochacon@gmail.com");
+        label.textContent = "¡Correo copiado!";
+      } catch (error) {
+        label.textContent = "jefrycamilochacon@gmail.com";
+      }
+      setTimeout(() => { label.textContent = "Copiar correo"; }, 2200);
+    });
+  </script>
 </body>
 </html>
