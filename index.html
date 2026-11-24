@@ -581,15 +581,38 @@ body.dark .portrait {
       text-transform: uppercase;
     }
     .modalhead p { color: var(--text); font-size: 13px; line-height: 1.6; }
-    .media-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
-    .media-gallery img, .media-gallery iframe {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      border: 0;
-      background: var(--surface);
-      object-fit: cover;
-    }
-    .media-gallery .wide { grid-column: 1 / -1; aspect-ratio: 16 / 8; }
+/* GALERÍA DE PROYECTOS */
+.media-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+/* IMÁGENES VERTICALES TIPO POST */
+.media-gallery img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    display: block;
+    border: 0;
+    background: var(--surface);
+}
+
+/* VIDEOS HORIZONTALES */
+.media-gallery iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    background: var(--surface);
+}
+
+/* ELIMINAR FORMATO PANORÁMICO */
+.media-gallery .wide {
+    grid-column: auto;
+}
+
     .placeholder {
       min-height: 190px;
       display: grid;
@@ -798,11 +821,11 @@ body.dark .portrait {
         videos: ["https://player.vimeo.com/video/1249493520", "https://player.vimeo.com/video/1249493526","https://player.vimeo.com/video/1249493532","https://player.vimeo.com/video/1249493510"]
       },
       {
-        title: "Trama",
+        title: "TRAMA",
         category: "Marca personal",
         color: "#93472f",
         description: "Desarrollo integral de una marca de moda urbana: identidad visual, sistema gráfico, diseño de prendas, estampados y aplicaciones de marca.",
-        images: ["trama-portada.png", "trama-01.png", "trama-02.png", "trama-03.png"]
+        images: ["t1.png", "t2.png", "t3.png"]
       },
       {
         title: "Motion Graphics",
@@ -817,7 +840,7 @@ body.dark .portrait {
         category: "Exploración visual",
         color: "#e36a3a",
         description: "Ilustración digital, exploración de formas, color, personajes y lenguajes gráficos propios.",
-        images: ["Illus.gif"]
+        images: ["Illus.gif","i1.png", "i2.png", "i3.png", "i4.png","i5.png", "i6.png", "i7.png", "i8.png","i9.png", "i10.png", "i11.png", "i12.png","i13.png", "i14.png", "i15.png", "i16.png", "i17.png"]
       },
       {
         title: "Edición de Video",
@@ -832,49 +855,50 @@ body.dark .portrait {
         category: "UX/UI · Web · App",
         color: "#5369a7",
         description: "Diseño de interfaces, arquitectura visual, prototipado y maquetación de experiencias digitales para web y aplicaciones.",
-        images: []
+        images: ["Digital.gif", "d1.png"]
       },
       {
         title: "Experimental Lab",
         category: "Proyectos personales",
         color: "#b84f25",
         description: "Un espacio para experimentar con dirección de arte, técnicas visuales, conceptos y nuevas herramientas creativas.",
-        images: ["ProyectosP.png", "p1.png", "p2.png", "p3.png", "p4.png"]
+        images: ["Experimental.gif"]
       },
       {
         title: "Fotografía y Retoque",
         category: "Fotografía",
         color: "#4a5360",
         description: "Fotografía, retoque digital, tratamiento de imagen y exploración de atmósferas visuales.",
-        images: []
+        images: ["Fotografia.gif"]
       },
       {
         title: "Branding & Identidad",
         category: "Identidad visual",
         color: "#394b9c",
         description: "Construcción de identidades visuales, sistemas gráficos, recursos de marca y aplicaciones para distintos puntos de contacto.",
-        images: []
+        images: ["Identidad.gif", "b1.png"]
       },
       {
         title: "Campañas Publicitarias",
         category: "Comunicación",
         color: "#f06a23",
         description: "Conceptualización y desarrollo de campañas: piezas gráficas, adaptaciones, comunicación digital y contenido audiovisual.",
-        images: ["EnviaLogo.png", "e1.png", "e2.png"]
+        images: ["Publicidad.gif", "p1.png","p2.png"],
+        videos: ["https://player.vimeo.com/video/1187433643",]
       },
       {
         title: "Diseño Editorial",
         category: "Diseño gráfico",
         color: "#394b9c",
         description: "Diseño y composición de publicaciones, retículas, jerarquía tipográfica, piezas editoriales y narrativas visuales.",
-        images: []
+        images: ["Editorial.gif","t1.png"]
       },
       {
         title: "Packaging",
         category: "Diseño de producto",
         color: "#8d583d",
         description: "Exploración de empaques, etiquetas, sistemas gráficos y presentación visual de productos.",
-        images: []
+        images: ["Packaging.gif"]
       }
     ];
 
